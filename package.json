@@ -1,0 +1,37 @@
+{
+  "author": {
+    "name": "gyetvan-andras"
+  },
+  "bugs": {
+    "url": "https://github.com/gyetvan-andras/react-native-keyboard-buttons/issues"
+  },
+  "dependencies": {},
+  "description": "A react native extension to add buttons to keyboard.",
+  "devDependencies": {},
+  "directories": {},
+  "homepage": "https://github.com/gyetvan-andras/react-native-keyboard-buttons#readme",
+  "keywords": [
+    "react-native",
+    "react",
+    "ios",
+    "toolbar",
+    "textinput"
+  ],
+  "license": "MIT",
+  "main": "index.ios.js",
+  "maintainers": [
+    {
+      "name": "dickyt",
+      "email": "me@idickyt.com"
+    }
+  ],
+  "name": "react-native-keyboard-buttons",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gyetvan-andras/react-native-keyboard-buttons.git"
+  },
+  "scripts": {},
+  "version": "0.0.1"
+}
