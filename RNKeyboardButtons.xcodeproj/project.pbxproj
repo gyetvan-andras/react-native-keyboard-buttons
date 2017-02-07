@@ -16,7 +16,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 6;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,6 +79,7 @@
 				EADF3C7F1BEE147600DCD186 /* Sources */,
 				EADF3C801BEE147600DCD186 /* Frameworks */,
 				EADF3C811BEE147600DCD186 /* CopyFiles */,
+				B359DFD31E4A0AA300F97DE0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -120,6 +121,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B359DFD31E4A0AA300F97DE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EADF3C7F1BEE147600DCD186 /* Sources */ = {

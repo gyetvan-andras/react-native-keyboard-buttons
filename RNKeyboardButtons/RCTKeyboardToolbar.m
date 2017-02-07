@@ -15,6 +15,28 @@
 #import <React/RCTUIManager.h>
 #import <React/RCTEventDispatcher.h>
 #import "RCTTextViewExtension.h"
+#import <objc/runtime.h>
+
+@interface UIBarButtonItem (simulateVar)
+-(void)setKeyString:(NSString *)myString;
+-(NSString *)keyString;
+@end
+
+@implementation UIBarButtonItem (simulateVar)
+
+static char STRING_KEY;
+
+-(void)setKeyString: (NSString *)myString
+{
+    objc_setAssociatedObject(self, &STRING_KEY, myString, OBJC_ASSOCIATION_RETAIN);
+}
+
+-(NSString *)keyString
+{
+    return (NSString *)objc_getAssociatedObject(self, &STRING_KEY);
+}
+
+@end
 
 @implementation RCTKeyboardToolbar
 
@@ -49,26 +71,55 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
             textView = reactNativeTextView;
         }
         
-        UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 50, 50)];
+        UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
         
 //        NSInteger toolbarStyle = [RCTConvert NSInteger:options[@"barStyle"]];
         numberToolbar.barStyle = UIBarStyleDefault;//toolbarStyle;
+        NSArray *buttons = NULL;
+        @try {
+            buttons = [RCTConvert NSArray:options[@"buttons"]];
+        } @catch (NSException *exception) {
+            RCTLogError(@"RCTKeyboardToolbar: buttons paramater must be an array of button specs!", reactNode);
+            return;
+        }
         
-        NSArray *buttons = [RCTConvert NSArray:options[@"buttons"]];
-        
+//        NSLog(@"Buttons:%@",buttons);
         NSNumber *currentUid = [RCTConvert NSNumber:options[@"uid"]];
         
-        NSMutableArray *toolbarItems = [NSMutableArray array];
-        for (NSString *buttonTitle in buttons) {
-//            NSLog(@"Button:%@",button);
         
-            UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
-            button.title = buttonTitle;
-            button.tag = [currentUid intValue];
-            button.tintColor = [UIColor colorWithRed:19/255.0 green:144/255.0 blue:255/255.0 alpha:1.0];
-            [toolbarItems addObject:button];
+        NSMutableArray *toolbarItems = [NSMutableArray array];
+        for (NSDictionary *buttonSpec in buttons) {
+            NSString *buttonTitle = buttonSpec[@"title"];
+            NSString *buttonColor = buttonSpec[@"color"];
+            NSString *buttonKey = buttonSpec[@"key"];
+            if(!buttonKey) buttonKey = buttonTitle;
+//            NSLog(@"Title:%@ color:%@ key:%@", buttonTitle, buttonColor, buttonKey);
+            UIColor *tintColor = [UIColor colorWithRed:19/255.0 green:144/255.0 blue:255/255.0 alpha:1.0];
+            if(buttonColor) {
+                tintColor = [RCTConvert UIColor:buttonColor];
+            }
+            if([buttonTitle compare:@"|"] == NSOrderedSame) {
+                [toolbarItems addObject:[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+            } else {
+                UIBarButtonItem *button = NULL;
+                if([buttonTitle compare:@"<"] == NSOrderedSame) {
+                    UIImage* img = [[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    button = [[UIBarButtonItem alloc]initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                } else if([buttonTitle compare:@">"] == NSOrderedSame) {
+                    UIImage* img = [[UIImage imageNamed:@"forward"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    button = [[UIBarButtonItem alloc]initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                } else if([buttonTitle compare:@"Done"] == NSOrderedSame) {
+                    button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStyleDone target:self action:@selector(keyboardButtonAction:)];
+                } else {
+                    button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                }
+//                button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                button.keyString = buttonKey;
+                button.tag = [currentUid intValue];
+                button.tintColor = tintColor;
+                [toolbarItems addObject:button];
+            }
         }
-        NSLog(@"Toolbar items: %@", toolbarItems);
         numberToolbar.items = toolbarItems;
         
         [numberToolbar sizeToFit];
@@ -81,10 +132,9 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
 - (void)keyboardButtonAction:(UIBarButtonItem*)sender
 {
     NSNumber *uid = [NSNumber numberWithLong:sender.tag];
-    NSString *button = sender.title;
-    NSLog(@"uid:%@ title:%@",uid.stringValue, button);
+    NSString *buttonKey = sender.keyString;
     [self.bridge.eventDispatcher sendAppEventWithName:@"TUKeyboardToolbarDidTouchOn"
-                                                 body:@{@"uid": uid.stringValue,@"button": button}
+                                                 body:@{@"uid": uid.stringValue,@"button": buttonKey}
     ];
 }
 

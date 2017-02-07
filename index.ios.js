@@ -39,6 +39,11 @@ class RCTKeyboardToolbarManager {
 	configure(node, options, callbacks) {
 		var reactNode = findNodeHandle(node);
 		options.uid = _RCTKeyboardToolbarHelper.getUid();
+		options.buttons.forEach((button) => {
+			if(button.color) {
+				button.color = processColor(button.color)
+			}
+		})
 		KeyboardToolbar.configure(reactNode, options, (error, currentUid) => {
 			node.uid = currentUid;
 			if (!error) {
