@@ -9,7 +9,6 @@
   "description": "A react native extension to add buttons to keyboard.",
   "devDependencies": {},
   "directories": {},
-  "gitHead": "c1238af0acc8f5e39602a85150ecbd62a7297b1d",
   "homepage": "https://github.com/gyetvan-andras/react-native-keyboard-buttons#readme",
   "keywords": [
     "react-native",
@@ -34,5 +33,5 @@
     "url": "git+https://github.com/gyetvan-andras/react-native-keyboard-buttons.git"
   },
   "scripts": {},
-  "version": "0.0.4"
+  "version": "0.0.5"
 }
