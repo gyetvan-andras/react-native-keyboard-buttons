@@ -40,11 +40,11 @@ If you would like to use **< >** images in your keyboard toolbar buttons, copy t
 		{
 			title:'<',
 			color:'#00ff00',
-			key:'back'
+			key:'prev'
 		},
 		{
 			title:'>',
-			key:'prev'
+			key:'next'
 		},
 		{
 			title:'|',
