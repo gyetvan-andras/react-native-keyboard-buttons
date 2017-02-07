@@ -24,13 +24,13 @@ If you would like to use **< >** images in your keyboard toolbar buttons, copy t
 	}
 	```
 
-- The title is parsed as follows:
-	- < - replaced with a back image
-	- \> - replaced with a forward image
-	- | - replaced with a felxibile space
-	- Done - will bolded
+	- The title is parsed as follows:
+		- < - replaced with a back image
+		- \> - replaced with a forward image
+		- | - replaced with a felxibile space
+		- Done - will bolded
 
-- If no key provided then the title will be used. Also, when no color provided it will be replaced with the default blue iOS toolbar color.
+	- If no key provided then the title will be used. Also, when no color provided it will be replaced with the default blue iOS toolbar color.
 
 2. onAction: called when a button pressed, the key parameter is passed.
 
