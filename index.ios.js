@@ -28,7 +28,6 @@ class RCTKeyboardToolbarHelper {
 const _RCTKeyboardToolbarHelper = new RCTKeyboardToolbarHelper()
 
 NativeAppEventEmitter.addListener('TUKeyboardToolbarDidTouchOn', (data) => {
-	console.log(data)
 	let eventHandler = _RCTKeyboardToolbarHelper.getCallback(data.uid).onAction;
 	if (eventHandler) {
 		eventHandler(data.button);
