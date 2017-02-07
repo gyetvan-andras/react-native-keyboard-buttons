@@ -15,21 +15,23 @@ If you would like to use **< >** images in your keyboard toolbar buttons, copy t
 ```<TextInputWithButtons>``` is a ```<TextInput>``` replacement and it is fully compatible with it. The following properties should be provided:
 
 1. buttons: an array of button description which is the following:
-```javascript
-{
-	title: string,
-	color: React Native compatible color string,
-	key:string 
-}
-```
-	- The title is parsed as follows:
-		- < - replaced with a back image
-		- \> - replaced with a forward image
-		- | - replaced with a felxibile space
-		- Done - will bolded
 
-	- If no key provided then the title will be used. Also, when no color provided it will be replaced with the default blue iOS toolbar color.
-	
+	```javascript
+	{
+		title: string,
+		color: React Native compatible color string,
+		key:string 
+	}
+	```
+
+- The title is parsed as follows:
+	- < - replaced with a back image
+	- \> - replaced with a forward image
+	- | - replaced with a felxibile space
+	- Done - will bolded
+
+- If no key provided then the title will be used. Also, when no color provided it will be replaced with the default blue iOS toolbar color.
+
 2. onAction: called when a button pressed, the key parameter is passed.
 
 ```javascript
