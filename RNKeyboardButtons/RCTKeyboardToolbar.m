@@ -100,6 +100,11 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
             }
             if([buttonTitle compare:@"|"] == NSOrderedSame) {
                 [toolbarItems addObject:[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+            } else if([buttonTitle compare:@"_"] == NSOrderedSame) {
+                UIBarButtonItem* spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil]
+                spacer.width = 10;
+                [toolbarItems addObject:spacer];
+
             } else {
                 UIBarButtonItem *button = NULL;
                 if([buttonTitle compare:@"<"] == NSOrderedSame) {
@@ -108,12 +113,17 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
                 } else if([buttonTitle compare:@">"] == NSOrderedSame) {
                     UIImage* img = [[UIImage imageNamed:@"forward"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     button = [[UIBarButtonItem alloc]initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                } else if([buttonTitle compare:@">>"] == NSOrderedSame) {
+                    UIImage* img = [[UIImage imageNamed:@"fforward"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    button = [[UIBarButtonItem alloc]initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
+                } else if([buttonTitle compare:@"<<"] == NSOrderedSame) {
+                    UIImage* img = [[UIImage imageNamed:@"bback"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    button = [[UIBarButtonItem alloc]initWithImage:img style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
                 } else if([buttonTitle compare:@"Done"] == NSOrderedSame) {
                     button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStyleDone target:self action:@selector(keyboardButtonAction:)];
                 } else {
                     button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
                 }
-//                button = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStylePlain target:self action:@selector(keyboardButtonAction:)];
                 button.keyString = buttonKey;
                 button.tag = [currentUid intValue];
                 button.tintColor = tintColor;
