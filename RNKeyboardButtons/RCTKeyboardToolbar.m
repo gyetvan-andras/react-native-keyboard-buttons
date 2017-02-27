@@ -101,7 +101,7 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
             if([buttonTitle compare:@"|"] == NSOrderedSame) {
                 [toolbarItems addObject:[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
             } else if([buttonTitle compare:@"_"] == NSOrderedSame) {
-                UIBarButtonItem* spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil]
+                UIBarButtonItem* spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
                 spacer.width = 10;
                 [toolbarItems addObject:spacer];
 
