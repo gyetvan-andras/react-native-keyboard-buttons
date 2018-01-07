@@ -68,7 +68,7 @@ RCT_EXPORT_METHOD(configure:(nonnull NSNumber *)reactNode
         }
         else {
             RCTTextField *reactNativeTextView = ((RCTTextField *)view);
-            textView = reactNativeTextView;
+            textView = reactNativeTextView.backedTextInputView;
         }
         
         UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
